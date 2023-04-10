@@ -1,0 +1,41 @@
+package Step_definition;
+
+import Base.TestBase;
+import cucumber.api.PendingException;
+import cucumber.api.java.en.And;
+import cucumber.api.java.en.Given;
+import cucumber.api.java.en.Then;
+import cucumber.api.java.en.When;
+import org.junit.Assert;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+import java.net.MalformedURLException;
+import java.net.URL;
+
+public class InvalidLogin3 extends TestBase {
+
+    @When("^I type \"([^\"]*)\"$")
+    public void iType(String Username) throws Throwable {
+        driver.findElement(By.xpath("//*[@id=\"email\"]")).sendKeys(Username);
+    }
+
+    @And("^I input \"([^\"]*)\"$")
+    public void iInput(String Password) throws Throwable {
+        driver.findElement(By.id("passwd")).sendKeys(Password);
+    }
+
+    @When("^i click the login$")
+    public void iClickTheLogin() {
+        driver.findElement(By.xpath("//*[@id=\"SubmitLogin\"]")).click();
+    }
+
+    @Then("^I should get the correct \"([^\"]*)\"$")
+    public void iShouldGetTheCorrect(String error) throws Throwable {
+        String ExpectedErrorMessage = error;
+        String ActualErrorMessage = driver.findElement(By.xpath("//*[@id=\"center_column\"]/div[1]/ol/li")).getText();
+        Assert.assertEquals(ExpectedErrorMessage, ActualErrorMessage);
+        System.out.println(ActualErrorMessage);
+    }
+}
